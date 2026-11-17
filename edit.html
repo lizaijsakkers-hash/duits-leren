@@ -1,0 +1,185 @@
+
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Duits leren 🇩🇪</title>
+<style>
+body {
+  margin: 0;
+  font-family: Arial;
+  background: linear-gradient(135deg,#ffe0ec,#d9f3ff);
+  text-align: center;
+  color: #333;
+}
+
+header {
+  background: #ff85aa;
+  color: white;
+  padding: 20px;
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.container {
+  background: white;
+  max-width: 500px;
+  margin: 25px auto;
+  padding: 25px;
+  border-radius: 25px;
+  box-shadow: 0 5px 15px #ccc;
+}
+
+button {
+  background: #ff85aa;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 13px 20px;
+  margin: 7px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #ff5790;
+}
+
+.word {
+  font-size: 35px;
+  font-weight: bold;
+  color: #e84c80;
+  margin: 25px;
+}
+
+#answer {
+  padding: 12px;
+  border: 2px solid #ff85aa;
+  border-radius: 10px;
+  font-size: 17px;
+  width: 70%;
+}
+
+#result {
+  font-size: 19px;
+  font-weight: bold;
+  min-height: 30px;
+}
+
+.score {
+  color: #168c64;
+  font-size: 20px;
+}
+</style>
+</head>
+
+<body>
+
+<header>🇩🇪 Deutsch lernen! 🇩🇪</header>
+
+<div class="container">
+  <h2>Welkom bij Duits leren! 💗</h2>
+  <p>Leer Duitse woordjes en word steeds beter!</p>
+
+  <div class="score">
+    ⭐ Punten: <span id="score">0</span>
+  </div>
+
+  <hr>
+
+  <h2>📚 Leer woordjes</h2>
+  <div class="word" id="german">Hallo</div>
+  <h3 id="dutch">Hallo</h3>
+
+  <button onclick="previousWord()">⬅️ Vorige</button>
+  <button onclick="nextWord()">Volgende ➡️</button>
+
+  <hr>
+
+  <h2>📝 Duitse quiz</h2>
+  <p>Wat betekent dit Duitse woord?</p>
+
+  <div class="word" id="question">Hund</div>
+
+  <input id="answer" placeholder="Typ je antwoord...">
+
+  <br><br>
+  <button onclick="checkAnswer()">Controleer!</button>
+
+  <p id="result"></p>
+
+  <button onclick="newQuestion()">Nieuwe vraag 🔄</button>
+</div>
+
+<script>
+const words = [
+ ["Hallo","Hallo"],
+ ["Hund","Hond"],
+ ["Katze","Kat"],
+ ["Haus","Huis"],
+ ["Schule","School"],
+ ["Wasser","Water"],
+ ["Buch","Boek"],
+ ["Apfel","Appel"],
+ ["Freund","Vriend"],
+ ["Danke","Bedankt"],
+ ["Bitte","Alsjeblieft"],
+ ["Guten Morgen","Goedemorgen"],
+ ["Gute Nacht","Welterusten"],
+ ["Tschüss","Doei"],
+ ["Liebe","Liefde"]
+];
+
+let index = 0;
+let score = 0;
+let current = 0;
+let answered = false;
+
+function showWord() {
+ document.getElementById("german").textContent = words[index][0];
+ document.getElementById("dutch").textContent = words[index][1];
+}
+
+function nextWord() {
+ index = (index + 1) % words.length;
+ showWord();
+}
+
+function previousWord() {
+ index = (index - 1 + words.length) % words.length;
+ showWord();
+}
+
+function newQuestion() {
+ current = Math.floor(Math.random() * words.length);
+ answered = false;
+ document.getElementById("question").textContent = words[current][0];
+ document.getElementById("answer").value = "";
+ document.getElementById("result").textContent = "";
+}
+
+function checkAnswer() {
+ if(answered) return;
+
+ let answer = document.getElementById("answer").value.trim().toLowerCase();
+ let correct = words[current][1].toLowerCase();
+
+ if(answer === correct) {
+   score += 10;
+   document.getElementById("score").textContent = score;
+   document.getElementById("result").textContent = "🎉 Super! Helemaal goed!";
+   document.getElementById("result").style.color = "green";
+   answered = true;
+ } else {
+   document.getElementById("result").textContent = "❌ Probeer het nog eens!";
+   document.getElementById("result").style.color = "red";
+ }
+}
+
+showWord();
+newQuestion();
+</script>
+
+</body>
+</html>
